@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FormValidator from './FormValidator';
-import PopUp from './PopUp';
+import FormValidator from '../../Utils/FormValidator';
+import PopUp from '../../Utils/PopUp'
 
 class Formulario extends Component {
 
@@ -27,7 +27,7 @@ class Formulario extends Component {
                 validoQuando: true,
                 mensagem: 'Entre com um valor numérico'
             }
-        ]);
+        ])
 
         this.stateInicial = {
             nome: '',
@@ -37,6 +37,7 @@ class Formulario extends Component {
         }
 
         this.state = this.stateInicial;
+
     }
 
     escutadorDeInput = event => {
@@ -48,24 +49,22 @@ class Formulario extends Component {
     }
 
     submitFormulario = () => {
-
         const validacao = this.validador.valida(this.state);
 
-        if(validacao.isValid) {
+        if(validacao.isValid){
             this.props.escutadorDeSubmit(this.state);
             this.setState(this.stateInicial);
-        } else {
+        }else{
             const { nome, livro, preco } = validacao;
             const campos = [nome, livro, preco];
-
             const camposInvalidos = campos.filter(elem => {
-                return elem.isInvalid;            
+                return elem.isInvalid;
             });
             camposInvalidos.forEach(campo => {
-                PopUp.exibeMensagem('error', campo.message);
+                PopUp.exibeMensagem('error', campo.mensagem);
             });
         }
-
+        
     }
 
     render() {
@@ -78,42 +77,39 @@ class Formulario extends Component {
                     <div className="input-field col s4">
                         <label className="input-field" htmlFor="nome">Nome</label>
                         <input
+                            className="validate"
                             id="nome"
                             type="text"
                             name="nome"
                             value={nome}
-                            onChange={this.escutadorDeInput}
-                        />
+                            onChange={this.escutadorDeInput} />
                     </div>
                     <div className="input-field col s4">
                         <label className="input-field" htmlFor="livro">Livro</label>
                         <input
+                            className="validate"
                             id="livro"
                             type="text"
                             name="livro"
                             value={livro}
-                            onChange={this.escutadorDeInput}
-                        />
+                            onChange={this.escutadorDeInput} />
 
                     </div>
                     <div className="input-field col s4">
                         <label className="input-field" htmlFor="preco">Preço</label>
                         <input
+                            className="validate"
                             id="preco"
                             type="text"
                             name="preco"
                             value={preco}
-                            onChange={this.escutadorDeInput}
-                        />
+                            onChange={this.escutadorDeInput} />
                     </div>
                 </div>
-                <button onClick={this.submitFormulario} type="button">Salvar
+                <button className="waves-effect waves-light indigo lighten-2 btn" onClick={this.submitFormulario} type="button">Salvar
                 </button>
             </form>
-
-        )
-
+        );
     }
 }
-
 export default Formulario;
